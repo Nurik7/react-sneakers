@@ -1,3 +1,5 @@
+import s from './Header.module.scss'
+
 const Header = (props) => {
   return (
     <header className="d-flex justify-between align-center p-40">
