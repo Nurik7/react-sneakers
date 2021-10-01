@@ -1,10 +1,15 @@
 import s from './Card.module.scss'
+import {useState} from "react";
 
 const Index = (props) => {
+  const [isAdded, setIsAdded] = useState()
+  const [isLiked, setIsLiked] = useState()
+  const onPlus = () => setIsAdded(!isAdded)
+  const onLike = () => setIsLiked(!isLiked)
   return (
     <div className={s.card}>
       <div className={s.favourite}>
-        <img src="./img/button-like.svg" alt="Unliked"/>
+        <img onClick={onLike} src={isLiked ? "./img/button-liked.svg" : "./img/button-like.svg"} alt="favourite"/>
       </div>
       <img width={133} height={112} src={props.imageSrc} alt={props.alt}/>
       <h5>{props.title}</h5>
@@ -13,9 +18,8 @@ const Index = (props) => {
           <span>Цена:</span>
           <b>{props.price} руб.</b>
         </div>
-        <button className={s.button}>
-          <img width={11} height={11} src="./img/button-add.svg" alt="add"/>
-        </button>
+        <img className={s.plusButton} onClick={onPlus} src={isAdded ? './img/button-added.svg' : './img/button-add.svg'}
+             alt="add"/>
       </div>
     </div>
   )
