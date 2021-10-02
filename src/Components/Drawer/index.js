@@ -1,8 +1,8 @@
 import s from './Drawer.module.scss'
 import CartItem from "./CartItem";
 
-const Drawer = (props) => {
-  const cartItems = props.sneakers.map(e => <CartItem imageSrc={e.imageSrc} alt={e.alt} title={e.title}
+const Drawer = ({items = [], closeCart = false}) => {
+  const cartItems = items.map(e => <CartItem imageSrc={e.imageSrc} alt={e.alt} title={e.title}
                                                       price={e.price}/>)
   const countPrice = (el) => {
     let count = 0
@@ -12,15 +12,15 @@ const Drawer = (props) => {
     return count
   }
   const countTax = () => {
-    return Math.round(countPrice(props.sneakers) * 0.05)
+    return Math.round(countPrice(items) * 0.05)
   }
   return (
-    <div style={{display: "none"}} className={s.overlay}>
+    <div className={s.overlay}>
       <div className={s.drawer}>
         <div className={s.cartTop}>
           <h2 className="d-flex justify-between mb-30 align-center">
             Корзина
-            <img className={s.removeBtn + " mt-10"} src="./img/btn-removed.svg" alt=""/>
+            <img onClick={closeCart} className={s.removeBtn + " mt-10"} src="./img/btn-removed.svg" alt=""/>
           </h2>
           <div className={s.cartItems}>
             {cartItems}
@@ -31,7 +31,7 @@ const Drawer = (props) => {
             <li className='d-flex mb-20'>
               <span>Итого:</span>
               <div></div>
-              <b>{countPrice(props.sneakers)} руб.</b>
+              <b>{countPrice(items)} руб.</b>
             </li>
             <li className='d-flex mb-20'>
               <span>Налог 5%:</span>

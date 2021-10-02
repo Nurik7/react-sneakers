@@ -1,0 +1,6 @@
+.carts {
+  display: grid;
+  grid-gap: 40px;
+  grid-template-columns: 3fr 3fr 3fr 3fr;
+  justify-items: center;
+}

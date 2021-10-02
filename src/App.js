@@ -1,41 +1,35 @@
 import Card from "./Components/Card";
 import Header from "./Components/Header";
 import Drawer from "./Components/Drawer";
-
-const sneakers = [
-  {
-    imageSrc: './img/sneakers/1.jpg',
-    alt: 'Nike Blazer Mid Suede',
-    title: 'Мужские Кроссовки Nike Blazer Mid Suede',
-    price: 12999,
-  },
-  {
-    imageSrc: './img/sneakers/2.jpg',
-    alt: 'Nike Air Max 270',
-    title: 'Мужские Кроссовки Nike Air Max 270',
-    price: 15700,
-  },
-  {
-    imageSrc: './img/sneakers/3.jpg',
-    alt: 'Nike Blazer Mid Suede',
-    title: 'Мужские Кроссовки Nike Blazer Mid Suede',
-    price: 8499,
-  },
-  {
-    imageSrc: './img/sneakers/4.jpg',
-    alt: 'Puma X Aka Boku Future Rider',
-    title: 'Кроссовки Puma X Aka Boku Future Rider',
-    price: 8999,
-  },
-]
-
+import {useEffect, useState} from "react";
+import s from './App.module.scss'
 
 function App() {
-  let sneakersCards = sneakers.map(e => <Card imageSrc={e.imageSrc} alt={e.alt} title={e.title} price={e.price}/>)
+  const [sneakersItems, setSneakersItems] = useState([])
+  const [sneakersCartItems, setSneakersCartItems] = useState([])
+  const [isCartOpened, setIsCartOpened] = useState(false)
+
+  useEffect(() => {
+    fetch('https://61589fed5167ba00174bbb8e.mockapi.io/sneakers')
+      .then(res => res.json())
+      .then(res => setSneakersItems(res))
+  }, [])
+
+  const onAddToCart = (obj) => {
+    setSneakersCartItems(prev => [...prev, obj])
+  }
+
+  let sneakersCards = sneakersItems.map(e => (
+    <Card imageSrc={e.imageSrc} alt={e.alt}
+          title={e.title} price={e.price}
+          onClickPlus={(obj) => onAddToCart(obj)}
+    />
+  ))
+
   return (
     <div className="wrapper clear">
-      <Drawer sneakers={sneakers}/>
-      <Header/>
+      {isCartOpened && <Drawer closeCart={() => setIsCartOpened(false)} items={sneakersCartItems}/>}
+      <Header openCart={() => setIsCartOpened(true)}/>
       <div className="content p-40">
         <div className="d-flex justify-between align-center mb-40">
           <h1>Все кроссовки</h1>
@@ -44,7 +38,7 @@ function App() {
             <input placeholder="Поиск..."/>
           </div>
         </div>
-        <div className="d-flex justify-around">
+        <div className={s.carts}>
           {sneakersCards}
         </div>
 
