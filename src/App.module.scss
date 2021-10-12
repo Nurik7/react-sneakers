@@ -4,3 +4,44 @@
   grid-template-columns: 3fr 3fr 3fr 3fr;
   justify-items: center;
 }
+
+.content {
+  .contentInner {
+    display: flex;
+    align-items: flex-start;
+
+    h1 {
+      margin: 0;
+      overflow: auto;
+      max-width: 65%;
+    }
+
+    .searchBlock {
+      border: 1px solid #f3f3f3;
+      border-radius: 10px;
+      padding: 0 15px;
+      position: sticky;
+      height: 50px;
+      right: 24%;
+
+      input {
+        border: 0;
+        padding: 13px 34px 13px 13px;
+        font-size: 16px;
+        width: 250px;
+        position: relative;
+        top: 0px;
+      }
+
+      .searchButton {
+        background-color: #fff;
+        outline: none;
+        border: none;
+        position: absolute;
+        right: 8px;
+        bottom: 7px;
+        cursor: pointer;
+      }
+    }
+  }
+}

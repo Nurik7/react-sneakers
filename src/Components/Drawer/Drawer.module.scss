@@ -6,7 +6,9 @@
   z-index: 1;
   width: 100%;
   height: 100%;
-
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 
   .drawer {
     z-index: 2;
@@ -20,7 +22,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: auto;
+    overflow: hidden;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
 
     .cartTop {
       width: 100%;
@@ -66,6 +70,45 @@
   }
 }
 
+.overlayVisible {
+  visibility: visible;
+  opacity: 1;
+
+  .drawer {
+    transform: translateX(0);
+  }
+}
+
+.cartEmptyTop {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: 60%;
+  justify-content: space-between;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  .cartEmptyTitle {
+    color: #000;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 27px;
+    margin-bottom: 10px;
+  }
+
+  .cartEmptyText {
+    color: #000;
+    opacity: 40%;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+
+  }
+}
 
 .removeBtn {
   opacity: 0.5;
@@ -124,5 +167,57 @@
 
   &:active {
     background-color: darken(#9dd458, 5%);
+  }
+
+  &:disabled {
+    background-color: #bebebe;
+    cursor: default;
+    animation: orderButton 1s ease-in-out infinite;
+  }
+}
+
+.cartEmptyButton {
+  border: none;
+  width: 80%;
+  height: 55px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19.36px;
+  text-align: center;
+  border-radius: 18px;
+  background-color: #9dd458;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+
+  img {
+    position: absolute;
+    transform: translate(-35px, 2px) rotate(180deg);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &:hover {
+    background-color: lighten(#9dd458, 5%);
+
+    img {
+      transform: translate(-45px, 2px) rotate(180deg);
+    }
+  }
+
+  &:active {
+    background-color: darken(#9dd458, 5%);
+  }
+}
+
+@keyframes orderButton {
+  0% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
   }
 }
