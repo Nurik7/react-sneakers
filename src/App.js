@@ -18,8 +18,13 @@ function App() {
   const [searchInput, setSearchInput] = useState('')
 
   function updateSneakers() {
-    axios.get('https://61589fed5167ba00174bbb8e.mockapi.io/api/sneakers/items')
-      .then(res => setSneakersItems(res.data))
+    try {
+      axios.get('https://61589fed5167ba00174bbb8e.mockapi.io/api/sneakers/items')
+        .then(res => setSneakersItems(res.data))
+    } catch (error) {
+      alert('Could not download sneakers from server. Please wait for couple seconds and refresh the page. Thx ;)')
+      console.error(error)
+    }
   }
 
   useEffect(() => {
@@ -87,24 +92,36 @@ function App() {
     }
   }
   const onDeleteFromFavourite = (id) => {
-    if (sneakersItems.some(e => Number(e.id) === Number(id))) {
-      const obj = favourites.find(e => Number(e.itemId) === Number(sneakersItems.find(el => el.id === id).id))
-      axios.delete(`https://61589fed5167ba00174bbb8e.mockapi.io/api/sneakers/favourites/${obj.id}`)
-      axios.put(`https://61589fed5167ba00174bbb8e.mockapi.io/api/sneakers/items/${id}`, {
-        "inFavourite": false
-      }).then(() => updateSneakers())
-      setFavourites(favourites.filter((e) => Number(e.itemId) !== Number(id)))
+    try {
+      if (sneakersItems.some(e => Number(e.id) === Number(id))) {
+        const obj = favourites.find(e => Number(e.itemId) === Number(sneakersItems.find(el => el.id === id).id))
+        axios.delete(`https://61589fed5167ba00174bbb8e.mockapi.io/api/sneakers/favourites/${obj.id}`)
+        axios.put(`https://61589fed5167ba00174bbb8e.mockapi.io/api/sneakers/items/${id}`, {
+          "inFavourite": false
+        }).then(() => updateSneakers())
+        setFavourites(favourites.filter((e) => Number(e.itemId) !== Number(id)))
+      }
+    } catch (error) {
+      alert('Sorry, could not delete from favourite. Wait for couple of seconds and refresh the page. Thx ;)')
+      console.error(error)
     }
+
   }
   const onDeleteFromCart = (id) => {
-    if (sneakersItems.some(e => Number(e.id) === Number(id))) {
-      const obj = sneakersCartItems.find(e => Number(e.itemId) === Number(sneakersItems.find(el => el.id === id).id))
-      axios.delete(`https://61589fed5167ba00174bbb8e.mockapi.io/api/sneakers/cart/${obj.id}`)
-      axios.put(`https://61589fed5167ba00174bbb8e.mockapi.io/api/sneakers/items/${id}`, {
-        "inCart": false
-      }).then(() => updateSneakers())
-      setSneakersCartItems(sneakersCartItems.filter((e) => Number(e.itemId) !== Number(id)))
+    try {
+      if (sneakersItems.some(e => Number(e.id) === Number(id))) {
+        const obj = sneakersCartItems.find(e => Number(e.itemId) === Number(sneakersItems.find(el => el.id === id).id))
+        axios.delete(`https://61589fed5167ba00174bbb8e.mockapi.io/api/sneakers/cart/${obj.id}`)
+        axios.put(`https://61589fed5167ba00174bbb8e.mockapi.io/api/sneakers/items/${id}`, {
+          "inCart": false
+        }).then(() => updateSneakers())
+        setSneakersCartItems(sneakersCartItems.filter((e) => Number(e.itemId) !== Number(id)))
+      }
+    } catch (error) {
+      alert('Sorry, could not delete from cart. Wait for couple of seconds and refresh the page. Thx ;)')
+      console.log(error)
     }
+
   }
   const onDeleteWholeCart = (id, length) => {
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
@@ -130,26 +147,24 @@ function App() {
       setIsCartOpened, updateSneakers, isLoading
     }}>
       <div className="wrapper clear">
-        {/*{isCartOpened &&*/}
-        {/*<Drawer/>}*/}
         <div>
           <Drawer opened={isCartOpened}/>
         </div>
 
         <Header openCart={() => setIsCartOpened(true)}/>
 
-        <Route path={'/'} exact>
+        <Route path={'/'} exact render={() =>
           <Home searchInput={searchInput}
                 setSearchInput={setSearchInput}
           />
-        </Route>
+        }/>
 
-        <Route path={'/favourites'}>
+        <Route path={'/favourites'} exact render={() =>
           <Favourites/>
-        </Route>
-        <Route path={'/orders'}>
+        }/>
+        <Route path={'/orders'} exact render={() =>
           <Orders/>
-        </Route>
+        }/>
       </div>
     </AppContext.Provider>
   )

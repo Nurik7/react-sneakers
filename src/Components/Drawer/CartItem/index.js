@@ -13,7 +13,7 @@ const CartItem = ({imageSrc, alt, title, price, id}) => {
         <b>{price} руб.</b>
       </div>
       <img id={id} onClick={(e) => onDeleteFromCart(id)} className={s.removeBtn + " mt-10"}
-           src="./img/btn-removed.svg"
+           src="img/btn-removed.svg"
            alt=""/>
     </div>
   )

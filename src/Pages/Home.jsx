@@ -19,10 +19,10 @@ const Home = ({searchInput, setSearchInput}) => {
       <div className={`${s.contentInner} justify-between align-center mb-40`}>
         {searchInput ? <h1>Поиск по кроссовкам: {searchInput}</h1> : <h1>Все кроссовки</h1>}
         <div className={s.searchBlock}>
-          <img src="./img/search.svg" alt="Search"/>
+          <img src="img/search.svg" alt="Search"/>
           <input onChange={e => setSearchInput(e.target.value)} value={searchInput} placeholder="Поиск..."/>
           {searchInput &&
-          <img onClick={() => setSearchInput('')} className={s.searchButton} src="./img/btn-remove.svg" alt=""/>}
+          <img onClick={() => setSearchInput('')} className={s.searchButton} src="img/btn-remove.svg" alt=""/>}
         </div>
       </div>
       <div className={s.carts}>

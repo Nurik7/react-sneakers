@@ -37,7 +37,7 @@ const Card = ({
       {isLoading ? <Loader/> : <>
         {isItemAdded &&
         <div className={s.favourite}>
-          <img onClick={onLike} src={isItemAdded(id, favourites) ? "./img/button-liked.svg" : "./img/button-like.svg"}
+          <img onClick={onLike} src={isItemAdded(id, favourites) ? "img/button-liked.svg" : "img/button-like.svg"}
                alt="favourite"/>
         </div>}
         <img width={133} height={112} src={imageSrc} alt={alt}/>
@@ -49,7 +49,7 @@ const Card = ({
           </div>
           {isItemAdded &&
           <img className="cu-p" onClick={onPlus}
-               src={isItemAdded(id, sneakersCartItems) ? './img/button-added.svg' : './img/button-add.svg'}
+               src={isItemAdded(id, sneakersCartItems) ? 'img/button-added.svg' : 'img/button-add.svg'}
                alt="add"/>}
         </div>
       </>}
